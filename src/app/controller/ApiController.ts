@@ -9,10 +9,10 @@ class ApiController {
 	}
 
 	async store(req: Request, res: Response) {
-		let newUser = getRepository(User).create(req.body);
-		let result = await getRepository(User).save(newUser);
+		// let newUser = getRepository(User).create(req.body);
+		// let result = await getRepository(User).save(newUser);
 
-		return res.json(result);
+		return res.json(req.body);
 	}
 
 	async show(req: Request, res: Response) {

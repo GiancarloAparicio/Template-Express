@@ -1,7 +1,7 @@
-import { body, validationResult } from 'express-validator';
+import Validator from './Validator';
+import { body } from 'express-validator';
 
-export default [
-	body('username').isEmail(),
-	// password must be at least 5 chars long
-	body('password').isLength({ min: 5 }),
-];
+export default Validator([
+	body('email').isEmail().withMessage('Is not email'),
+	body('name').isLength({ min: 5 }).withMessage('must be at least 5 chars long'),
+]);
