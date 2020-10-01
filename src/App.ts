@@ -4,7 +4,9 @@ import 'reflect-metadata';
 import dotenv from 'dotenv';
 import morgan from 'morgan';
 import helmet from 'helmet';
+import compression from 'compression';
 import cors from 'cors';
+import path from 'path';
 
 import routes from './routes';
 
@@ -26,10 +28,14 @@ export default class App {
 
 	middlewares() {
 		this.app.use(morgan(process.env.APP_ENV === 'local' ? 'dev' : 'common'));
-		this.app.use(express.static('src/public'));
+		this.app.use(
+			`${process.env.APP_PATH_FILE}`,
+			express.static(path.resolve(`${process.env.APP_PATH_FILE}`))
+		);
 		this.app.use(helmet());
 		this.app.use(cors());
 		this.app.use(express.json());
+		this.app.use(compression());
 		this.app.use(express.urlencoded({ extended: false }));
 	}
 
@@ -40,7 +46,7 @@ export default class App {
 
 	routes() {
 		for (let route in routes) {
-			this.app.use(`/${route}/`, routes[route]);
+			this.app.use(`/${route}`, routes[route]);
 		}
 	}
 
