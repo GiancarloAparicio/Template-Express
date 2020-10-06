@@ -1,14 +1,16 @@
-import express, { Application, Router } from 'express';
+import express, { Application } from 'express';
 import { createConnection } from 'typeorm';
-import 'reflect-metadata';
-import dotenv from 'dotenv';
 import morgan from 'morgan';
 import helmet from 'helmet';
 import compression from 'compression';
 import cors from 'cors';
 import path from 'path';
+import AuthJWT from './app/middlewares/AuthJWT';
+import 'reflect-metadata';
 
 import routes from './routes';
+
+import { APP_PORT, APP_ENV, APP_PATH_FILE } from './config/config';
 
 export default class App {
 	app: Application;
@@ -22,26 +24,25 @@ export default class App {
 	}
 
 	config() {
-		dotenv.config();
-		this.app.set('port', process.env.APP_PORT || 8000);
+		this.app.set('port', APP_PORT || 8000);
 	}
 
 	middlewares() {
-		this.app.use(morgan(process.env.APP_ENV === 'local' ? 'dev' : 'common'));
+		this.app.use(morgan(APP_ENV === 'local' ? 'dev' : 'common'));
 		this.app.use(
-			`${process.env.APP_PATH_FILE}`,
-			express.static(path.resolve(`${process.env.APP_PATH_FILE}`))
+			`${APP_PATH_FILE}`,
+			express.static(path.resolve(`${APP_PATH_FILE}`))
 		);
 		this.app.use(helmet());
 		this.app.use(cors());
 		this.app.use(express.json());
 		this.app.use(express.urlencoded({ extended: false }));
+		this.app.use(AuthJWT);
 		this.app.use(compression());
 	}
 
 	typeOrm() {
-		const connection = createConnection();
-		return connection;
+		return createConnection();
 	}
 
 	routes() {
