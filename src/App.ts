@@ -6,9 +6,10 @@ import compression from 'compression';
 import cors from 'cors';
 import path from 'path';
 import AuthJWT from './app/middlewares/AuthJWT';
+import handle from './app/exceptions/handle';
 import 'reflect-metadata';
 
-import routes from './routes';
+import routes from './routes/index.routes';
 
 import { APP_PORT, APP_ENV, APP_PATH_FILE } from './config/config';
 
@@ -18,9 +19,10 @@ export default class App {
 	constructor() {
 		this.app = express();
 		this.config();
+		this.typeOrm();
 		this.middlewares();
 		this.routes();
-		this.typeOrm();
+		this.handles();
 	}
 
 	config() {
@@ -43,6 +45,10 @@ export default class App {
 
 	typeOrm() {
 		return createConnection();
+	}
+
+	handles() {
+		this.app.use(handle);
 	}
 
 	routes() {

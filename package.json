@@ -4,7 +4,14 @@
 	"main": "index.js",
 	"scripts": {
 		"build": "tsc",
-		"serve": "nodemon src/index.ts --exec ts-node"
+		"serve": "nodemon src/index.ts --exec ts-node",
+		"migration:generate": "npx ts-node ./node_modules/typeorm/cli.js migration:generate -n",
+		"migration:run": "npx ts-node ./node_modules/typeorm/cli.js migration:run",
+		"migration:revert": "npx ts-node ./node_modules/typeorm/cli.js migration:revert",
+		"migration:show": "npx ts-node ./node_modules/typeorm/cli.js migration:show",
+		"cache:clear": "npx ts-node ./node_modules/typeorm/cli.js cache:clear",
+		"entity:create": "npx ts-node ./node_modules/typeorm/cli.js entity:create -n",
+		"subscriber:create": "npx ts-node ./node_modules/typeorm/cli.js subscriber:create -n"
 	},
 	"keywords": [],
 	"author": "Ramos Aparicio",
@@ -22,12 +29,13 @@
 		"jsonwebtoken": "^8.5.1",
 		"morgan": "^1.10.0",
 		"multer": "^1.4.2",
-		"mysql2": "^2.2.5",
 		"reflect-metadata": "^0.1.13",
+		"sqlite3": "^5.0.0",
 		"typeorm": "^0.2.28",
 		"uuid": "^8.3.0"
 	},
 	"devDependencies": {
+		"@types/bcrypt": "^3.0.0",
 		"@types/compression": "^1.7.0",
 		"@types/cors": "^2.8.7",
 		"@types/express": "^4.17.8",
