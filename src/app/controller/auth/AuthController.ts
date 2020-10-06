@@ -27,7 +27,7 @@ export default class AuthController {
 		return res.status(Reply.code).json(Reply.data);
 	}
 
-	static async store(req: Request, res: Response) {
+	static async created(req: Request, res: Response) {
 		let user = getRepository(User).create({
 			name: req.body.name,
 			last_name: req.body.last_name,
@@ -46,10 +46,23 @@ export default class AuthController {
 	}
 
 	static async update(req: Request, res: Response) {
-		let user = getRepository(User).findOneOrFail({
-			where: { id: req.body.token.id },
-		});
+		let user = await getRepository(User).findOne(req.body.token.id);
 
-		return res.json(user);
+		try {
+			if (user) {
+				getRepository(User).merge(user, {
+					name: req.body.name,
+					last_name: req.body.last_name,
+					email: req.body.email,
+					password: await encryptTo(req.body.password),
+				});
+				let data = await getRepository(User).save(user);
+				Reply.success(200, 'User update', data);
+			}
+		} catch (error) {
+			Reply.badRequest(400, 'Data incorrect', 'Email exists');
+		}
+
+		return res.status(Reply.code).json(Reply.data);
 	}
 }

@@ -1,15 +1,14 @@
-import express, { Application } from 'express';
-import { createConnection } from 'typeorm';
+import cors from 'cors';
+import path from 'path';
+import 'reflect-metadata';
 import morgan from 'morgan';
 import helmet from 'helmet';
 import compression from 'compression';
-import cors from 'cors';
-import path from 'path';
-import AuthJWT from './app/middlewares/AuthJWT';
-import handle from './app/exceptions/handle';
-import 'reflect-metadata';
-
 import routes from './routes/index.routes';
+import { createConnection } from 'typeorm';
+import handle from './app/exceptions/handle';
+import express, { Application } from 'express';
+import AuthJWT from './app/middlewares/AuthJWT';
 
 import { APP_PORT, APP_ENV, APP_PATH_FILE } from './config/config';
 

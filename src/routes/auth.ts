@@ -6,7 +6,7 @@ import Login from '../app/validators/Login';
 const auth = Router();
 
 auth.post('/login', ...Login, AuthController.login);
-auth.post('/created', ...UserValidator, AuthController.store);
+auth.post('/created', ...UserValidator, AuthController.created);
 auth.put('/update', ...UserValidator, AuthController.update);
 
 export default auth;

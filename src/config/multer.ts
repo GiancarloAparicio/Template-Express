@@ -1,5 +1,5 @@
-import multer from 'multer';
 import path from 'path';
+import multer from 'multer';
 import { v4 as uuid } from 'uuid';
 import { APP_PATH_FILE } from './config';
 
