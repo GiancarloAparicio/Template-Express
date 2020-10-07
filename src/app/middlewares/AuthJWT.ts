@@ -1,6 +1,6 @@
-import { Request, Response, NextFunction } from 'express';
 import jwt from 'jsonwebtoken';
 import { APP_KEY_JWT } from '../../config/config';
+import { Request, Response, NextFunction } from 'express';
 
 export default (req: Request, res: Response, next: NextFunction) => {
 	if (req.path !== '/auth/login' && req.path !== '/auth/created') {

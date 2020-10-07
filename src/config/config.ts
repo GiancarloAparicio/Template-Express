@@ -25,3 +25,12 @@ export const TYPEORM_ENTITIES = process.env.TYPEORM_ENTITIES;
 export const TYPEORM_ENTITIES_DIR = process.env.TYPEORM_ENTITIES_DIR;
 export const TYPEORM_MIGRATIONS = process.env.TYPEORM_MIGRATIONS;
 export const TYPEORM_MIGRATIONS_DIR = process.env.TYPEORM_MIGRATIONS_DIR;
+
+export const SWAGGER_VERSION = process.env.SWAGGER_VERSION || '1.0.0';
+export const SWAGGER_TITLE = process.env.SWAGGER_TITLE || 'API';
+export const SWAGGER_DESCRIPTION =
+	process.env.SWAGGER_DESCRIPTION || 'API description';
+export const SWAGGER_CONTACT_NAME =
+	process.env.SWAGGER_CONTACT_NAME || 'API developer';
+export const SWAGGER_SERVER = APP_URL + ':' + APP_PORT || 'http://localhost:8000';
+export const SWAGGER_PATH = process.env.SWAGGER_PATH || '/api/docs';

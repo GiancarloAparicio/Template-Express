@@ -4,13 +4,13 @@ import 'reflect-metadata';
 import morgan from 'morgan';
 import helmet from 'helmet';
 import compression from 'compression';
+import swagger from './config/swagger';
 import routes from './routes/index.routes';
 import { createConnection } from 'typeorm';
 import handle from './app/exceptions/handle';
 import express, { Application } from 'express';
 import AuthJWT from './app/middlewares/AuthJWT';
-
-import { APP_PORT, APP_ENV, APP_PATH_FILE } from './config/config';
+import { APP_PORT, APP_ENV, APP_PATH_FILE, SWAGGER_PATH } from './config/config';
 
 export default class App {
 	app: Application;
@@ -38,8 +38,9 @@ export default class App {
 		this.app.use(cors());
 		this.app.use(express.json());
 		this.app.use(express.urlencoded({ extended: false }));
-		this.app.use(AuthJWT);
+		//this.app.use(AuthJWT);
 		this.app.use(compression());
+		this.app.use(SWAGGER_PATH, swagger.serve, swagger.setup);
 	}
 
 	typeOrm() {
