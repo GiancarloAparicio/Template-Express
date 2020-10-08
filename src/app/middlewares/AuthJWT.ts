@@ -9,12 +9,12 @@ export default (req: Request, res: Response, next: NextFunction) => {
 
 			jwt.verify(token, `${APP_KEY_JWT}`, function (error, decoded) {
 				if (error) {
-					return res.status(500).send({
+					return res.status(400).send({
 						errors: [
 							{
-								status: 500,
-								title: 'Error',
-								details: 'Server error',
+								status: 400,
+								title: 'Forbidden',
+								details: 'Not authorized',
 							},
 						],
 					});

@@ -1,4 +1,11 @@
 node_modules
 .env
 build
+
+*.sqlite
 express.sqlite
+
+**/*.log
+src/app/exceptions/logs/*.log
+
+src/public/**/*
