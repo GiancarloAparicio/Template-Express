@@ -7,7 +7,7 @@ import compression from 'compression';
 import swagger from './config/swagger';
 import routes from './routes/index.routes';
 import { createConnection } from 'typeorm';
-import handle from './app/exceptions/handle';
+import handleError from './app/exceptions/handle';
 import express, { Application } from 'express';
 import AuthJWT from './app/middlewares/AuthJWT';
 import { APP_PORT, APP_ENV, APP_PATH_FILE, SWAGGER_PATH } from './config/config';
@@ -21,7 +21,6 @@ export default class App {
 		this.typeOrm();
 		this.middlewares();
 		this.routes();
-		this.handles();
 	}
 
 	config() {
@@ -36,19 +35,16 @@ export default class App {
 		);
 		this.app.use(helmet());
 		this.app.use(cors());
+		this.app.use(compression());
 		this.app.use(express.json());
 		this.app.use(express.urlencoded({ extended: false }));
-		//this.app.use(AuthJWT);
-		this.app.use(compression());
+		this.app.use(AuthJWT);
+		this.app.use(handleError);
 		this.app.use(SWAGGER_PATH, swagger.serve, swagger.setup);
 	}
 
 	typeOrm() {
 		return createConnection();
-	}
-
-	handles() {
-		this.app.use(handle);
 	}
 
 	routes() {

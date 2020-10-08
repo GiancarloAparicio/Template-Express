@@ -14,14 +14,14 @@ export default class AuthController {
 			if (await matchEncryptTo(req.body.password, user.password)) {
 				let token = signJWT({ id: user.id, email: user.email });
 
-				Reply.success(200, 'Login success', {
+				Reply.status(200).success('Login success', {
 					token,
 				});
 			} else {
-				Reply.badRequest(403, 'Forbidden', 'Password incorrect');
+				Reply.status(403).badRequest('Forbidden', 'Password incorrect');
 			}
 		} catch (error) {
-			Reply.badRequest(404, 'User not found', 'Email does not exist');
+			Reply.status(404).badRequest('User not found', 'Email does not exist');
 		}
 
 		return res.status(Reply.code).json(Reply.data);
@@ -37,9 +37,9 @@ export default class AuthController {
 
 		try {
 			let result = await getRepository(User).save(user);
-			Reply.success(201, 'User created', result);
+			Reply.status(201).success('User created', result);
 		} catch (error) {
-			Reply.badRequest(404, 'User exists', 'Email exist');
+			Reply.status(404).badRequest('User exists', 'Email exist');
 		}
 
 		return res.status(Reply.code).json(Reply.data);
@@ -57,10 +57,10 @@ export default class AuthController {
 					password: await encryptTo(req.body.password),
 				});
 				let data = await getRepository(User).save(user);
-				Reply.success(200, 'User update', data);
+				Reply.status(200).success('User update', data);
 			}
 		} catch (error) {
-			Reply.badRequest(400, 'Data incorrect', 'Email exists');
+			Reply.status(400).badRequest('Data incorrect', 'Email exists');
 		}
 
 		return res.status(Reply.code).json(Reply.data);

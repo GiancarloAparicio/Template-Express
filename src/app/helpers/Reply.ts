@@ -1,53 +1,60 @@
+import log from '../../config/winston';
+
 export default class Reply {
 	static data: object;
 	static code: number;
 
-	static badRequest(code: number = 400, title: string, details: string) {
-		Reply.code = code;
+	static badRequest(title: string, details: string) {
+		log.error(`${title}:  ${details} (${Reply.code})`);
 		Reply.data = {
 			errors: [
 				{
-					status: code,
+					status: Reply.code || 400,
 					title,
 					details,
 				},
 			],
 		};
 
-		return Reply.data;
+		return Reply;
 	}
 
-	static internal(code: number = 500, details: string) {
-		Reply.code = code;
+	static internal(details: string) {
+		log.error(`Internal server error:  ${details}  (${Reply.code})`);
 		Reply.data = {
 			errors: [
 				{
-					status: code,
+					status: Reply.code || 500,
 					title: 'Internal server error',
 					details,
 				},
 			],
 		};
 
-		return Reply.data;
+		return Reply;
 	}
 
-	static success(code: number = 200, title: string, attributes: any) {
+	static success(title: string, attributes: any) {
+		log.info(`Title: ${title}  (${Reply.code})`);
 		if (attributes.hasOwnProperty('password')) {
 			delete attributes.password;
 		}
 
-		Reply.code = code;
 		Reply.data = {
 			data: [
 				{
 					type: title,
-					status: code,
+					status: Reply.code || 200,
 					attributes,
 				},
 			],
 		};
 
-		return Reply.data;
+		return Reply;
+	}
+
+	static status(code: number) {
+		Reply.code = code;
+		return Reply;
 	}
 }
