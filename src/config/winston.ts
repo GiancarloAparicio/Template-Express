@@ -1,6 +1,11 @@
 import path from 'path';
+import fs from 'fs';
 import { APP_ENV } from '../config/config';
 import { createLogger, format, transports } from 'winston';
+
+if (!fs.existsSync(path.join(__dirname, '../app/exceptions/logs'))) {
+	fs.mkdirSync(path.join(__dirname, '../app/exceptions/logs'));
+}
 
 const log = createLogger({
 	level: APP_ENV === 'development' || APP_ENV === 'dev' ? 'debug' : 'info',
