@@ -3,9 +3,10 @@ node_modules
 build
 
 *.sqlite
-express.sqlite
 
-**/*.log
+**/**/*.log
 src/app/exceptions/logs/*.log
 
-src/public/**/*
+src/public/**/*.*
+
+package-lock.json
