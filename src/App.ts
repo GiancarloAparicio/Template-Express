@@ -9,7 +9,7 @@ import routes from './routes/index.routes';
 import { createConnection } from 'typeorm';
 import handleError from './app/exceptions/handle';
 import express, { Application } from 'express';
-import AuthJWT from './app/middlewares/AuthJWT';
+import AuthJWT from './app/middlewares/auth/JWT';
 import { APP_PORT, APP_ENV, APP_PATH_FILE, SWAGGER_PATH } from './config/config';
 
 export default class App {

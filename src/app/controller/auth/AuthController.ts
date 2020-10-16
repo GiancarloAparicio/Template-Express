@@ -12,19 +12,23 @@ export default class AuthController {
 			});
 
 			if (await matchEncryptTo(req.body.password, user.password)) {
-				let token = signJWT({ id: user.id, email: user.email });
+				let token = signJWT(user);
 
-				Reply.status(200).success('Login success', {
+				return Reply.status(200).success('Login success', {
 					token,
 				});
 			} else {
-				Reply.status(403).badRequest('Forbidden', 'Password incorrect');
+				return Reply.status(403).badRequest(
+					'Forbidden',
+					'Password incorrect'
+				);
 			}
 		} catch (error) {
-			Reply.status(404).badRequest('User not found', 'Email does not exist');
+			return Reply.status(404).badRequest(
+				'User not found',
+				'Email does not exist'
+			);
 		}
-
-		return res.status(Reply.code).json(Reply.data);
 	}
 
 	static async created(req: Request, res: Response) {
@@ -37,18 +41,15 @@ export default class AuthController {
 
 		try {
 			let result = await getRepository(User).save(user);
-			Reply.status(201).success('User created', result);
+			return Reply.status(201).success('User created', result);
 		} catch (error) {
-			Reply.status(404).badRequest('User exists', 'Email exist');
+			return Reply.status(404).badRequest('User exists', 'Email exist');
 		}
-
-		return res.status(Reply.code).json(Reply.data);
 	}
 
 	static async update(req: Request, res: Response) {
-		let user = await getRepository(User).findOne(req.body.token.id);
-
 		try {
+			let user = await getRepository(User).findOne(req.body.decoded.id);
 			if (user) {
 				getRepository(User).merge(user, {
 					name: req.body.name,
@@ -57,12 +58,10 @@ export default class AuthController {
 					password: await encryptTo(req.body.password),
 				});
 				let data = await getRepository(User).save(user);
-				Reply.status(200).success('User update', data);
+				return Reply.status(200).success('User update', data);
 			}
 		} catch (error) {
-			Reply.status(400).badRequest('Data incorrect', 'Email exists');
+			return Reply.status(400).badRequest('Data incorrect', 'Email exists');
 		}
-
-		return res.status(Reply.code).json(Reply.data);
 	}
 }

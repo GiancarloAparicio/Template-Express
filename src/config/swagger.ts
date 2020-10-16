@@ -1,3 +1,4 @@
+import path from "path"
 import swaggerJsDoc from 'swagger-jsdoc';
 import swaggerUi from 'swagger-ui-express';
 import {
@@ -20,7 +21,7 @@ const swaggerOptions = {
 			servers: [SWAGGER_SERVER],
 		},
 	},
-	apis: ['./routes/**/*.ts'],
+	apis: [path.join(__dirname,'../routes/**/*.ts')],
 };
 
 export default {
