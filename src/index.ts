@@ -19,6 +19,7 @@ export default class App {
 		this.config();
 		this.middlewares();
 		this.routes();
+		this.errors();
 	}
 
 	config() {
@@ -37,8 +38,11 @@ export default class App {
 		this.app.use(express.json());
 		this.app.use(express.urlencoded({ extended: false }));
 		this.app.use(AuthJWT);
-		this.app.use(handleError);
 		this.app.use(SWAGGER_PATH, swagger.serve, swagger.setup);
+	}
+
+	errors() {
+		this.app.use(handleError);
 	}
 
 	routes() {

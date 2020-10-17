@@ -1,4 +1,4 @@
-import Validator from '../helpers/Validator';
+import Validator from '../services/Validator';
 import { body } from 'express-validator';
 
 export default Validator([
