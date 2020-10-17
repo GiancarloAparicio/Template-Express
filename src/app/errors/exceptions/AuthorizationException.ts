@@ -1,9 +1,10 @@
 import ErrorBase from './ErrorBase';
 
-export default class AuthenticationException extends ErrorBase {
+export default class AuthorizationException extends ErrorBase {
 	constructor(errors: object | Array<object>) {
-		super('Authentication Exception');
+		super('Authorization Exception');
 		this.status(403);
+		this.details('Forbidden');
 		this.errors(errors);
 	}
 }

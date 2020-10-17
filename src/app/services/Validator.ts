@@ -1,6 +1,6 @@
 import { Request, Response, NextFunction } from 'express';
 import { validationResult } from 'express-validator';
-import ValidationException from '../exceptions/errors/ValidationException';
+import ValidationException from '../errors/exceptions/ValidationException';
 
 export default (rules: any) => [
 	rules,

@@ -1,20 +1,21 @@
 import cors from 'cors';
 import path from 'path';
-import './config/mongoose.ts';
 import morgan from 'morgan';
 import helmet from 'helmet';
+import './config/mongoose.ts';
 import compression from 'compression';
 import swagger from './config/swagger';
 import routes from './routes/index.routes';
-import handleError from './app/exceptions/handle';
 import express, { Application } from 'express';
 import AuthJWT from './app/middlewares/auth/JWT';
+import handleError from './app/errors/handle';
 import { APP_PORT, APP_ENV, APP_PATH_FILE, SWAGGER_PATH } from './config/config';
 
 export default class App {
 	app: Application;
 
 	constructor() {
+		this.node();
 		this.app = express();
 		this.config();
 		this.middlewares();
@@ -22,8 +23,17 @@ export default class App {
 		this.errors();
 	}
 
+	node() {
+		// process.on('unhandledRejection', (error) => {
+		// 	console.log(error);
+		// });
+		// process.on('uncaughtException', (error) => {
+		// 	console.log(error);
+		// });
+	}
+
 	config() {
-		this.app.set('port', APP_PORT || 8000);
+		this.app.set('port', APP_PORT);
 	}
 
 	middlewares() {
@@ -41,10 +51,6 @@ export default class App {
 		this.app.use(SWAGGER_PATH, swagger.serve, swagger.setup);
 	}
 
-	errors() {
-		this.app.use(handleError);
-	}
-
 	routes() {
 		for (let route in routes) {
 			this.app.use(`/${route}`, routes[route]);
@@ -53,6 +59,10 @@ export default class App {
 
 	listen() {
 		this.app.listen(this.app.get('port'));
+	}
+
+	errors() {
+		this.app.use(handleError);
 	}
 }
 
