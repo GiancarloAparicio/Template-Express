@@ -41,10 +41,6 @@ export default class App {
 		this.app.use(SWAGGER_PATH, swagger.serve, swagger.setup);
 	}
 
-	errors() {
-		this.app.use(handleError);
-	}
-
 	routes() {
 		for (let route in routes) {
 			this.app.use(`/${route}`, routes[route]);
@@ -53,6 +49,10 @@ export default class App {
 
 	listen() {
 		this.app.listen(this.app.get('port'));
+	}
+
+	errors() {
+		this.app.use(handleError);
 	}
 }
 
