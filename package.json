@@ -4,14 +4,7 @@
 	"main": "index.js",
 	"scripts": {
 		"build": "tsc",
-		"serve": "nodemon src/index.ts --exec ts-node",
-		"migration:generate": "npx ts-node ./node_modules/typeorm/cli.js migration:generate -n",
-		"migration:run": "npx ts-node ./node_modules/typeorm/cli.js migration:run",
-		"migration:revert": "npx ts-node ./node_modules/typeorm/cli.js migration:revert",
-		"migration:show": "npx ts-node ./node_modules/typeorm/cli.js migration:show",
-		"cache:clear": "npx ts-node ./node_modules/typeorm/cli.js cache:clear",
-		"entity:create": "npx ts-node ./node_modules/typeorm/cli.js entity:create -n",
-		"subscriber:create": "npx ts-node ./node_modules/typeorm/cli.js subscriber:create -n"
+		"serve": "nodemon src/index.ts --exec ts-node"
 	},
 	"keywords": [],
 	"author": "Ramos Aparicio",
@@ -27,13 +20,12 @@
 		"fs-extra": "^9.0.1",
 		"helmet": "^4.1.1",
 		"jsonwebtoken": "^8.5.1",
+		"mongoose": "^5.10.9",
 		"morgan": "^1.10.0",
 		"multer": "^1.4.2",
-		"reflect-metadata": "^0.1.13",
 		"sqlite3": "^5.0.0",
 		"swagger-jsdoc": "^4.2.0",
 		"swagger-ui-express": "^4.1.4",
-		"typeorm": "^0.2.28",
 		"uuid": "^8.3.0",
 		"winston": "^3.3.3"
 	},

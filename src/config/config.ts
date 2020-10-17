@@ -11,20 +11,12 @@ export const APP_PORT = process.env.APP_PORT;
 export const APP_URL = process.env.APP_URL;
 export const APP_PATH_FILE = process.env.APP_PATH_FILE;
 
-export const TYPEORM_CONNECTION = process.env.TYPEORM_CONNECTION;
-export const TYPEORM_HOST = process.env.TYPEORM_HOST;
-export const TYPEORM_USERNAME = process.env.TYPEORM_USERNAME;
-export const TYPEORM_PASSWORD = process.env.TYPEORM_PASSWORD;
-export const TYPEORM_DATABASE = process.env.TYPEORM_DATABASE;
-export const TYPEORM_PORT = process.env.TYPEORM_PORT;
-export const TYPEORM_SYNCHRONIZE = process.env.TYPEORM_SYNCHRONIZE;
-export const TYPEORM_LOGGING = process.env.TYPEORM_LOGGING;
-export const TYPEORM_LOGGER = process.env.TYPEORM_LOGGER;
-
-export const TYPEORM_ENTITIES = process.env.TYPEORM_ENTITIES;
-export const TYPEORM_ENTITIES_DIR = process.env.TYPEORM_ENTITIES_DIR;
-export const TYPEORM_MIGRATIONS = process.env.TYPEORM_MIGRATIONS;
-export const TYPEORM_MIGRATIONS_DIR = process.env.TYPEORM_MIGRATIONS_DIR;
+export const MONGOOSE_USER = process.env.MONGOOSE_USER || '';
+export const MONGOOSE_PASSWORD = process.env.MONGOOSE_PASSWORD || '';
+export const MONGOOSE_HOST = process.env.MONGOOSE_HOST || 'localhost';
+export const MONGOOSE_DATABASE = process.env.MONGOOSE_DATABASE || 'express';
+export const MONGOOSE_PORT = process.env.MONGOOSE_PORT || '27017';
+export const MONGOOSE_URI = `mongodb://${MONGOOSE_HOST}:${MONGOOSE_PORT}/${MONGOOSE_DATABASE}`;
 
 export const SWAGGER_VERSION = process.env.SWAGGER_VERSION || '1.0.0';
 export const SWAGGER_TITLE = process.env.SWAGGER_TITLE || 'API';
