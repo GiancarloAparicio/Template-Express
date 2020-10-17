@@ -1,7 +1,9 @@
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
 import { Request } from 'express';
+import Reply from '../services/Reply';
 import { APP_KEY_JWT } from '../../config/config';
+import AuthenticationException from '../exceptions/errors/AuthenticationException';
 
 /**
  * Encrypts a string and returns the encrypted string,
@@ -23,11 +25,15 @@ export async function encryptTo(
  * @param test
  * @param password
  */
-export async function matchEncryptTo(
-	test: string,
-	password: string
-): Promise<boolean> {
+export async function matchEncryptTo(test: string, password: string) {
 	return await bcrypt.compare(test, password);
+
+	// TODO: Add functionality for throw exceptions
+	// Reply.next(
+	// 	new AuthenticationException({
+	// 		details: 'Password incorrect',
+	// 	})
+	// );
 }
 
 /**

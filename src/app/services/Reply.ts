@@ -1,10 +1,11 @@
 import log from '../../config/winston';
-import { Response } from 'express';
+import { Response, NextFunction } from 'express';
 
 export default class Reply {
 	static data: object;
 	static code: number;
 	static response: Response;
+	static next: NextFunction;
 
 	static badRequest(title: string, details: string) {
 		log.error(`${title}:  ${details} (${Reply.code})`);
