@@ -3,12 +3,13 @@ import path from 'path';
 import morgan from 'morgan';
 import helmet from 'helmet';
 import './config/mongoose.ts';
+import * as www from './config/www';
 import compression from 'compression';
 import swagger from './config/swagger';
 import routes from './routes/index.routes';
+import handleError from './app/errors/handle';
 import express, { Application } from 'express';
 import AuthJWT from './app/middlewares/auth/JWT';
-import handleError from './app/errors/handle';
 import { APP_PORT, APP_ENV, APP_PATH_FILE, SWAGGER_PATH } from './config/config';
 
 export default class App {
@@ -24,12 +25,13 @@ export default class App {
 	}
 
 	node() {
-		// process.on('unhandledRejection', (error) => {
-		// 	console.log(error);
-		// });
-		// process.on('uncaughtException', (error) => {
-		// 	console.log(error);
-		// });
+		process.on('unhandledRejection', www.unhandledRejection);
+
+		process.on('error', www.error);
+
+		process.on('uncaughtException', www.uncaughtException);
+
+		process.on('listening', www.listening);
 	}
 
 	config() {

@@ -2,7 +2,7 @@ import Validator from '../services/Validator';
 import { body } from 'express-validator';
 
 export default Validator([
-	body('email').isEmail().withMessage('Is not email'),
+	body('email').isEmail().normalizeEmail().withMessage('Is not email'),
 
 	body('name')
 		.isLength({ min: 2 })

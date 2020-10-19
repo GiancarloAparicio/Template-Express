@@ -23,22 +23,6 @@ export default class Reply {
 		return Reply.response.status(Reply.code).json(Reply.data);
 	}
 
-	static internal(details: string) {
-		log.error(`Internal server error:  ${details}  (${Reply.code})`);
-
-		Reply.data = {
-			errors: [
-				{
-					status: Reply.code || 500,
-					title: 'Internal server error',
-					details,
-				},
-			],
-		};
-
-		return Reply.response.status(Reply.code).json(Reply.data);
-	}
-
 	static success(title: string, attributes: any) {
 		log.info(`Title: ${title}  (${Reply.code})`);
 

@@ -1,9 +1,10 @@
 import Reply from '../../services/Reply';
-import { Request, Response, NextFunction } from 'express';
-import { encryptTo, matchEncryptTo, signJWT } from '../../helpers/helper';
+import { Request, Response } from 'express';
+import { encryptTo, matchEncryptTo } from '../../helpers/helper';
+import { signJWT } from '../../helpers/JWT';
 
 export default class AuthController {
-	static async login(req: Request, res: Response, next: NextFunction) {
+	static async login(req: Request, res: Response) {
 		let user = {
 			//example
 			password: 'someThing',
@@ -12,10 +13,14 @@ export default class AuthController {
 		if (await matchEncryptTo(req.body.password, user.password)) {
 			let token = signJWT(user);
 
-			Reply.status(200).success('Login success', {
+			return Reply.status(200).success('Login success', {
 				token,
 			});
 		}
+		return Reply.status(403).badRequest(
+			'Authentication failed',
+			'Password incorrect'
+		);
 	}
 
 	static async created(req: Request, res: Response) {
