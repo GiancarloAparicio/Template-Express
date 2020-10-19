@@ -22,20 +22,29 @@ export default (req: Request, res: Response, next: NextFunction) => {
 					req.body.decoded = decoded;
 					Reply.response = res;
 					Reply.next = next;
+					Reply.request = req;
 					next();
 				}
 			});
-		} else {
+		} else if (req.method == 'POST') {
 			next(
 				new AuthorizationException({
 					title: 'Authorization',
 					details: 'Not authorized',
 				})
 			);
+		} else {
+			next(
+				new AuthorizationException({
+					title: 'Not found',
+					details: 'Error 404',
+				})
+			);
 		}
 	} else {
 		Reply.response = res;
 		Reply.next = next;
+		Reply.request = req;
 		next();
 	}
 };

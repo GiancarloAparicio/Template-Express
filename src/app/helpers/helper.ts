@@ -28,7 +28,8 @@ export async function matchEncryptTo(
 	password: string,
 	exception: boolean = false
 ) {
-	if (await bcrypt.compare(test, password)) {
+	console.log(typeof password, typeof test);
+	if (password && (await bcrypt.compare(test, password))) {
 		return true;
 	}
 
@@ -41,4 +42,16 @@ export async function matchEncryptTo(
 	}
 
 	return false;
+}
+
+/**
+ * 	Remove the property of an object only if it exists
+ * @param {Object} object
+ * @param {String} property
+ */
+export function removeProperty(object: any, property: string) {
+	if (object.hasOwnProperty(property)) {
+		delete object[property];
+	}
+	return object;
 }

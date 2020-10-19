@@ -2,7 +2,7 @@ import cors from 'cors';
 import path from 'path';
 import morgan from 'morgan';
 import helmet from 'helmet';
-import './config/mongoose.ts';
+import './config/mongoose';
 import * as www from './config/www';
 import compression from 'compression';
 import swagger from './config/swagger';
@@ -61,6 +61,7 @@ export default class App {
 
 	listen() {
 		this.app.listen(this.app.get('port'));
+		console.log(`APP port: ${this.app.get('port')}`);
 	}
 
 	errors() {

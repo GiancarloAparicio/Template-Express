@@ -1,10 +1,12 @@
 import log from '../../config/winston';
-import { Response, NextFunction } from 'express';
+import { removeProperty } from '../helpers/helper';
+import { Response, NextFunction, Request } from 'express';
 
 export default class Reply {
 	static data: object;
 	static code: number;
 	static response: Response;
+	static request: Request;
 	static next: NextFunction;
 
 	static badRequest(title: string, details: string) {
@@ -26,16 +28,28 @@ export default class Reply {
 	static success(title: string, attributes: any) {
 		log.info(`Title: ${title}  (${Reply.code})`);
 
-		if (attributes.hasOwnProperty('password')) {
-			delete attributes.password;
-		}
-
 		Reply.data = {
 			data: [
 				{
 					type: title,
 					status: Reply.code || 200,
-					attributes,
+					attributes: removeProperty(attributes, 'password'),
+				},
+			],
+		};
+
+		return Reply.response.status(Reply.code).json(Reply.data);
+	}
+
+	static internal(details: string) {
+		log.error(`Internal server error:  ${details}  (${Reply.code})`);
+
+		Reply.data = {
+			errors: [
+				{
+					status: Reply.code || 500,
+					title: 'Internal server error',
+					details,
 				},
 			],
 		};

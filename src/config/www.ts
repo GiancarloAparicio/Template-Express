@@ -13,11 +13,9 @@ export const error = (error: any) => {
 	switch (error.code) {
 		case 'EACCES':
 			log.error(APP_PORT + ': requires elevated privileges');
-			process.exit(1);
 			break;
 		case 'EADDRINUSE':
 			log.error(APP_PORT + ': is already in use');
-			process.exit(1);
 			break;
 		default:
 			throw error;

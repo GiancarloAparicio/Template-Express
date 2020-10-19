@@ -8,7 +8,6 @@ const userSchema = new Schema(
 		},
 		name: {
 			type: String,
-			unique: true,
 		},
 		email: {
 			type: String,
@@ -25,4 +24,4 @@ const userSchema = new Schema(
 	}
 );
 
-export default model('User', userSchema);
+export default model('users', userSchema);

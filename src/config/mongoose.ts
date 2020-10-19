@@ -19,5 +19,4 @@ connection.once('open', () => {
 
 connection.on('error', (err) => {
 	console.error('Error:', err);
-	process.exit();
 });
