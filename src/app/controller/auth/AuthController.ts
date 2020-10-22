@@ -1,9 +1,9 @@
 import Reply from '../../services/Reply';
 import { signJWT } from '../../helpers/JWT';
 import { Request, Response } from 'express';
+import User from '../../../database/models/User';
 import UserRepository from '../../repositories/UserRepository';
 import { encryptTo, matchEncryptTo, removeProperty } from '../../helpers/helper';
-import User from '../../../database/models/User';
 
 export default class AuthController {
 	static async login(req: Request, res: Response) {
@@ -11,12 +11,13 @@ export default class AuthController {
 
 		let user = await UserRepository.findOneOrFail({ email }, true);
 
-		if (await matchEncryptTo(password, user.password)) {
-			return Reply.status(200).success('Login success', {
-				token: signJWT(user),
-				user: removeProperty(user, 'password'),
-			});
-		} else {
+		if (user) {
+			if (await matchEncryptTo(password, user.password)) {
+				return Reply.status(200).success('Login success', {
+					token: signJWT(user),
+					user: removeProperty(user, 'password'),
+				});
+			}
 			return Reply.status(403).badRequest('Forbidden', 'Password incorrect');
 		}
 	}
@@ -30,7 +31,10 @@ export default class AuthController {
 			password: await encryptTo(password),
 		});
 		if (user) {
-			return Reply.status(201).success('User created', user);
+			return Reply.status(201).success('User created', {
+				...user,
+				token: signJWT(user),
+			});
 		}
 	}
 
@@ -46,8 +50,6 @@ export default class AuthController {
 
 		return Reply.status(200).success('Update success', {
 			user,
-			id: decoded._id,
-			test: 'decoded.id',
 		});
 	}
 }

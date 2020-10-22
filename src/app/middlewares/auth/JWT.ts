@@ -2,6 +2,7 @@ import jwt from 'jsonwebtoken';
 import Reply from '../../services/Reply';
 import { APP_KEY_JWT } from '../../../config/config';
 import { Request, Response, NextFunction } from 'express';
+import NotFoundException from '../../errors/exceptions/NotFoundException';
 import AuthorizationException from '../../errors/exceptions/AuthorizationException';
 import AuthenticationException from '../../errors/exceptions/AuthenticationException';
 
@@ -26,25 +27,13 @@ export default (req: Request, res: Response, next: NextFunction) => {
 					next();
 				}
 			});
-		} else if (req.method == 'POST') {
-			next(
-				new AuthorizationException({
-					title: 'Authorization',
-					details: 'Not authorized',
-				})
-			);
-		} else {
-			next(
-				new AuthorizationException({
-					title: 'Not found',
-					details: 'Error 404',
-				})
-			);
 		}
-	} else {
+	} else if (req.method == 'POST') {
 		Reply.response = res;
 		Reply.next = next;
 		Reply.request = req;
 		next();
+	} else {
+		next(new NotFoundException('Page not found'));
 	}
 };

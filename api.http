@@ -1,0 +1,31 @@
+
+
+### Register User
+POST http://localhost:8000/auth/created
+Content-Type: application/json
+
+{
+    "name":"Carlos",
+    "email":"carlos20@gmail.com",
+    "password":"123456789"
+}
+
+### Login User
+POST http://localhost:8000/auth/login
+Content-Type: application/json
+
+{
+    "email":"carlos20@gmail.com",
+    "password":"123456789"
+}
+
+### Update User
+PUT http://localhost:8000/auth/update
+Content-Type: application/json
+Authorization: Bearer eyJ...fhY
+
+{
+    "name":"newName",
+    "email":"newEmail@gmail.com",
+    "password":"newPass"
+}
