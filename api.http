@@ -1,7 +1,7 @@
 
 
 ### Register User
-POST http://localhost:8000/auth/created
+POST http://localhost:8000/auth/create
 Content-Type: application/json
 
 {
@@ -27,5 +27,5 @@ Authorization: Bearer eyJ...fhY
 {
     "name":"newName",
     "email":"newEmail@gmail.com",
-    "password":"newPass"
+    "password":"newPass123456"
 }

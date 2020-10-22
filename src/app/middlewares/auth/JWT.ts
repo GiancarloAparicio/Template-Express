@@ -3,11 +3,10 @@ import Reply from '../../services/Reply';
 import { APP_KEY_JWT } from '../../../config/config';
 import { Request, Response, NextFunction } from 'express';
 import NotFoundException from '../../errors/exceptions/NotFoundException';
-import AuthorizationException from '../../errors/exceptions/AuthorizationException';
 import AuthenticationException from '../../errors/exceptions/AuthenticationException';
 
 export default (req: Request, res: Response, next: NextFunction) => {
-	if (req.path !== '/auth/login' && req.path !== '/auth/created') {
+	if (req.path !== '/auth/login' && req.path !== '/auth/create') {
 		if (req.headers.authorization) {
 			let token = req.headers.authorization.split(' ')[1];
 

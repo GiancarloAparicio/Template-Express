@@ -1,5 +1,5 @@
 import { Request, Response, NextFunction } from 'express';
-import { validationResult } from 'express-validator';
+import { matchedData, validationResult } from 'express-validator';
 import ValidationException from '../errors/exceptions/ValidationException';
 
 export default (rules: any) => [
@@ -9,6 +9,7 @@ export default (rules: any) => [
 		if (!errors.isEmpty()) {
 			next(new ValidationException(errors.array()));
 		} else {
+			req.body.validated = matchedData(req);
 			next();
 		}
 	},

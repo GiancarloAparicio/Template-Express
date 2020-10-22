@@ -13,7 +13,7 @@ import AuthJWT from './app/middlewares/auth/JWT';
 import { APP_PORT, APP_ENV, APP_PATH_FILE, SWAGGER_PATH } from './config/config';
 
 export default class App {
-	app: Application;
+	private app: Application;
 
 	constructor() {
 		this.node();
@@ -24,7 +24,7 @@ export default class App {
 		this.errors();
 	}
 
-	node() {
+	private node() {
 		process.on('unhandledRejection', www.unhandledRejection);
 
 		process.on('error', www.error);
@@ -34,11 +34,11 @@ export default class App {
 		process.on('listening', www.listening);
 	}
 
-	config() {
+	private config() {
 		this.app.set('port', APP_PORT);
 	}
 
-	middlewares() {
+	private middlewares() {
 		this.app.use(morgan(APP_ENV === 'local' ? 'dev' : 'common'));
 		this.app.use(
 			`${APP_PATH_FILE}`,
@@ -53,7 +53,7 @@ export default class App {
 		this.app.use(SWAGGER_PATH, swagger.serve, swagger.setup);
 	}
 
-	routes() {
+	private routes() {
 		for (let route in routes) {
 			this.app.use(`/${route}`, routes[route]);
 		}
@@ -64,7 +64,7 @@ export default class App {
 		console.log(`APP port: ${this.app.get('port')}`);
 	}
 
-	errors() {
+	private errors() {
 		this.app.use(handleError);
 	}
 }

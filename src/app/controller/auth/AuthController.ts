@@ -22,13 +22,12 @@ export default class AuthController {
 		}
 	}
 
-	static async created(req: Request, res: Response) {
-		let { name, email, password } = req.body;
+	static async create(req: Request, res: Response) {
+		let { validated } = req.body;
 
 		let user = await UserRepository.create({
-			name,
-			email,
-			password: await encryptTo(password),
+			...validated,
+			password: await encryptTo(validated.password),
 		});
 		if (user) {
 			return Reply.status(201).success('User created', {
@@ -39,14 +38,9 @@ export default class AuthController {
 	}
 
 	static async update(req: Request, res: Response) {
-		let { email, password, name, last_name, decoded } = req.body;
+		let { validated, decoded } = req.body;
 
-		let user = await User.findByIdAndUpdate(decoded._id, {
-			email,
-			password,
-			name,
-			last_name,
-		});
+		let user = await User.findByIdAndUpdate(decoded._id, validated);
 
 		return Reply.status(200).success('Update success', {
 			user,
