@@ -12,6 +12,7 @@ import express, { Application } from 'express';
 import AuthJWT from './app/middlewares/auth/JWT';
 import { APP_PORT, APP_ENV, APP_PATH_FILE, SWAGGER_PATH } from './config/config';
 
+//export default class App {
 export default class App {
 	private app: Application;
 
@@ -59,12 +60,16 @@ export default class App {
 		}
 	}
 
-	listen() {
-		this.app.listen(this.app.get('port'));
+	listen(port: number = 8000) {
+		this.app.listen(this.app.get('port') || port);
 		console.log(`APP port: ${this.app.get('port')}`);
 	}
 
 	private errors() {
 		this.app.use(handleError);
+	}
+
+	getApplication(): Application {
+		return this.app;
 	}
 }

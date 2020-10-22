@@ -5,14 +5,29 @@
 	"scripts": {
 		"build": "tsc",
 		"serve": "nodemon src/index.ts --exec ts-node",
-		"jest": "jest",
+		"jest": "jest --runInBand --detectOpenHandles --passWithNoTests",
 		"jest:coverage": "jest --coverage"
 	},
 	"jest": {
 		"testEnvironment": "node",
 		"coveragePathIgnorePatterns": [
-			"/node_modules/",
-			"/src/"
+			"/node_modules/"
+		],
+		"moduleFileExtensions": [
+			"ts",
+			"tsx",
+			"js"
+		],
+		"transform": {
+			"^.+\\.(ts|tsx)$": "ts-jest"
+		},
+		"globals": {
+			"ts-jest": {
+				"tsConfigFile": "tsconfig.json"
+			}
+		},
+		"testMatch": [
+			"./src/tests/**/*.+(ts|tsx|js)"
 		]
 	},
 	"keywords": [],
@@ -44,7 +59,6 @@
 		"@types/express": "^4.17.8",
 		"@types/express-validator": "^3.0.0",
 		"@types/helmet": "0.0.48",
-		"@types/jest": "^26.0.15",
 		"@types/jsonwebtoken": "^8.5.0",
 		"@types/mongoose": "^5.7.36",
 		"@types/morgan": "^1.9.1",
@@ -56,6 +70,7 @@
 		"@types/swagger-ui-express": "^4.1.2",
 		"cross-env": "^7.0.2",
 		"jest": "^26.6.0",
+		"mongodb-memory-server": "^6.9.2",
 		"nodemon": "^2.0.4",
 		"supertest": "^5.0.0",
 		"ts-jest": "^26.4.1",
