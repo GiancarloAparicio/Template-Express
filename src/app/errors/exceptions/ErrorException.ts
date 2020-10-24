@@ -1,4 +1,4 @@
-export default class ErrorBase extends Error {
+export default class ErrorException extends Error {
 	private code: number;
 	private detail: string;
 	private data: object | Array<object>;
