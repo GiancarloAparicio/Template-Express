@@ -1,18 +1,18 @@
-// import App from '../App';
-// import request from 'supertest';
+import App from '../App';
+import request from 'supertest';
 
-// let app = new App();
-// beforeAll(() => {
-// 	app.listen(4000);
-// });
+const app = new App();
+beforeAll(() => {
+	app.listen(4000);
+});
 
-// describe('GET / - a simple api endpoint', () => {
-// 	it('Hello API Request', async () => {
-// 		const response: any = await request(app.getApplication()).get('/');
-// 		expect(response.message).toEqual('hello');
-// 		expect(response.statusCode).toEqual(200);
-// 	});
-// });
+describe('GET / - a simple api endpoint', () => {
+	it('Hello API Request', async () => {
+		const response = await request(app.getApplication()).get('/auth/login');
+		expect(response.body.message).not.toBe('hello');
+		expect(response.status).not.toBe(200);
+	});
+});
 
 describe('test', () => {
 	test('sum', () => {
